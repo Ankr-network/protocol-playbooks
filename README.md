@@ -10,7 +10,7 @@ These playbooks deploy nodes to remote servers.
 
 2 Edit the `hosts` inventory file with servers, that are going to host the project
 ```sh
-[ethereum-servers]
+[binance]
 127.0.0.1
 ```
 
