@@ -1,0 +1,10 @@
+- hosts: binance
+  remote_user: root
+  become: yes
+  become_method: sudo
+  roles:
+    - role: ../../roles/golang
+    - role: ../../roles/dependencies
+    - role: ../../roles/binance
+  vars_files:
+    - vars

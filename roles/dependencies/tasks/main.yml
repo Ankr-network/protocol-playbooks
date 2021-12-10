@@ -1,0 +1,22 @@
+---
+- name: Update packages
+  shell: |
+    apt-get update
+
+- name: Install dependencies
+  apt:
+    name: "{{item}}"
+    state: latest
+  loop:
+    - build-essential
+    - gcc
+    - gpg
+    - dirmngr
+    - git
+    - curl
+    - jq
+    - clang
+    - libclang-dev
+    - pkg-config
+    - libssl-dev
+  become: yes

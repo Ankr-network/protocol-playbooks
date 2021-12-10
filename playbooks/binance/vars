@@ -1,0 +1,19 @@
+go_version: 1.17.3
+
+dir: /data
+git_tag: v1.1.5
+git_repo: https://github.com/binance-chain/bsc
+bin_name: geth
+bin_path: build/bin
+
+# Set syncing mode (sync_mode) to `fast` or `full`
+sync_mode: full
+
+# Define if blockchain history is `archive` or `full` (gc_mode)
+gc_mode: full
+
+# Define network: `mainnet` or `testnet`
+network: mainnet
+
+# Startup by downloading snapshot or from scratch
+snapshot: true

@@ -1,0 +1,14 @@
+[Unit]
+  Description=bor
+  StartLimitIntervalSec=500
+  StartLimitBurst=5
+
+[Service]
+  Restart=on-failure
+  RestartSec=5s
+  ExecStart=/bin/bash {{ dir }}/deploy.sh
+  Type=simple
+  User=root
+
+[Install]
+  WantedBy=multi-user.target

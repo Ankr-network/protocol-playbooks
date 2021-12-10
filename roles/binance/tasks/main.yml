@@ -1,0 +1,38 @@
+---
+- name: Check if Service Exists
+  stat: path=/etc/systemd/system/{{bin_name}}.service
+  register: service_status
+
+- name: Stop Service
+  when: service_status.stat.exists
+  ansible.builtin.systemd:
+    name: "{{ bin_name }}"
+    state: stopped
+    daemon_reload: yes
+
+#Ensure to install golang before
+- name: Install node
+  shell: |
+    mkdir -p {{ dir }}
+    git clone {{ git_repo }} {{ dir }}/github/{{ bin_name }}
+    cd {{ dir }}/github/{{ bin_name }} && git checkout {{ git_tag }}
+    export PATH=$PATH:/usr/local/go/bin
+    make all
+    cp {{ bin_path }}/{{ bin_name }} /usr/local/bin/{{ bin_name }}
+
+- name: Copy configs
+  copy:
+    src: config/
+    dest: "{{ dir }}/config"
+
+- name: Add deploy.sh
+  template: src=deploy.sh dest="{{ dir }}/deploy.sh"
+
+- name: Add service
+  template: src={{bin_name}}.service dest=/etc/systemd/system/{{bin_name}}.service
+
+- name: Run service
+  ansible.builtin.systemd:
+    name: "{{ bin_name }}"
+    state: restarted
+    daemon_reload: yes
